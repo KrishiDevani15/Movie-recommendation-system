@@ -3,8 +3,9 @@ from typing import List
 import os
 from dotenv import load_dotenv
 import pickle
-import requests  # type:ignore
 from app.models.movies_model import Movie  # type:ignore
+import asyncio
+import aiohttp
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -42,7 +43,7 @@ q_movies['weighted_rating'] = q_movies.apply(weighted_rating, axis=1)
 q_movies = q_movies.sort_values('weighted_rating', ascending=False)
 
 # Display the top 100 movies based on the weighted rating
-top_100_movies_list = q_movies[["movie_id", 'title', 'vote_count', 'vote_average', 'popularity', 'weighted_rating']].head(50).to_dict(orient='records')
+top_100_movies_list = q_movies[["movie_id", 'title', 'vote_count', 'vote_average', 'popularity', 'weighted_rating']].head(101).to_dict(orient='records')
 
 # Get API key from the .env file
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
@@ -50,26 +51,22 @@ TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 if not TMDB_API_KEY:
     raise ValueError("TMDB_API_KEY is not set in the .env file")
 
-def fetch_poster(movie_id: int):
-    # URL for fetching the movie details
+async def fetch_poster_async(session: aiohttp.ClientSession, movie_id: int):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}"
-    
-    # Make the API request
-    response = requests.get(url)
-    if response.status_code != 200:
-        return None  # Return None if the movie is not found or API fails
-    
-    data = response.json()
-    
-    # Check if 'poster_path' exists and is valid
-    if 'poster_path' in data and data['poster_path']:
-        return f"https://image.tmdb.org/t/p/w500{data['poster_path']}"
-    return None
+    async with session.get(url) as resp:
+        if resp.status != 200:
+            return None
+        data = await resp.json()
+        poster_path = data.get("poster_path")
+        if poster_path:
+            return f"https://image.tmdb.org/t/p/w500{poster_path}"
+        return None
 
 @top_100.get("/movies/top-100-movies", response_model=List[Movie])
-def get_top_100_movies():
-    # Add poster URLs to the top 100 movies list
-    for movie in top_100_movies_list:
-        poster_url = fetch_poster(movie['movie_id'])
-        movie['poster_url'] = poster_url
+async def get_top_100_movies():
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_poster_async(session, movie["movie_id"]) for movie in top_100_movies_list]
+        posters = await asyncio.gather(*tasks)
+        for movie, poster_url in zip(top_100_movies_list, posters):
+            movie["poster_url"] = poster_url
     return top_100_movies_list
