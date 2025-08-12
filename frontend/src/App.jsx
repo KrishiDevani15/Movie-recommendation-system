@@ -5,6 +5,8 @@ import Navbar from "../components/Navbar";
 
 import Home from "../pages/Home";
 import Top100 from "../pages/Top100";
+import Footer from "../components/Footer";
+import SearchResults from "./SearchResults";
 
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -21,11 +23,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/top100" element={<Top100 />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
         </main>
-        <footer className="bg-gray-900 p-4 text-center text-gray-400">
-          © 2025 Movie Explorer. All rights reserved.
-        </footer>
+        <Footer></Footer>
       </div>
     </Router>
   );

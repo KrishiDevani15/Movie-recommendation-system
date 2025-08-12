@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.endpoints.top_100_movies import top_100 
+from app.endpoints.serach_router import search_router
 from scalar_fastapi import get_scalar_api_reference #type:ignore
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,6 +15,7 @@ app.add_middleware(
 )
 
 app.include_router(top_100)
+app.include_router(search_router)
 
 @app.get("/scalar", include_in_schema=False)
 async def scalar_html():
@@ -21,3 +23,4 @@ async def scalar_html():
         openapi_url=app.openapi_url,
         title="Scalar Movie documentation",
 )
+
