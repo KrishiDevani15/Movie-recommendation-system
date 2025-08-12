@@ -60,3 +60,9 @@
     opacity: 0.5;
   }
 }
+pre {
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}

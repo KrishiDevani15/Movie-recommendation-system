@@ -79,6 +79,11 @@ const Navbar = () => {
               Top 100
             </Link>
           </li>
+          <li>
+            <Link to="/about" className="nav-link">
+              About Me
+            </Link>
+          </li>
         </ul>
 
         <form onSubmit={handleSubmit} className="relative">

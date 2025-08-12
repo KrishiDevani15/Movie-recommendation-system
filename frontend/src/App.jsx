@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Top100 from "../pages/Top100";
 import Footer from "../components/Footer";
 import SearchResults from "./SearchResults";
+import About from "../pages/About";
 
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/top100" element={<Top100 />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
         <Footer></Footer>

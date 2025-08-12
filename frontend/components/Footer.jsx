@@ -12,9 +12,14 @@ const Footer = () => {
         color: "#888",
       }}
     >
-      <p className="text-gray-400 font-sans transition-colors duration-300 hover:text-white hover:cursor-pointer">
+      <a
+        href="https://github.com/KrishiDevani15/Movie-recommendation-system"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-400 font-sans transition-colors duration-300 hover:text-white hover:cursor-pointer"
+      >
         © {currentYear} Powered by Atom Ai. Made by Krishi Devani 😊
-      </p>
+      </a>
     </footer>
   );
 };
