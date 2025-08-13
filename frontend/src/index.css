@@ -1,4 +1,6 @@
+/* index.css */
 @import "tailwindcss";
+
 .nav-link {
   position: relative;
   color: white;
@@ -9,7 +11,7 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px; /* move underline 4px below the text */
+  bottom: -4px; /* Move underline 4px below the text */
   height: 2px;
   width: 0;
   background-color: #f59e0b; /* yellow-400 */
@@ -23,11 +25,12 @@
 .nav-link:hover::after {
   width: 100%;
 }
+
 .movie-title {
   position: relative;
-  display: inline-block; /* key to match underline width to text */
-  padding-bottom: 6px; /* space below text for underline */
-  font-weight: 700; /* bold */
+  display: inline-block; /* Key to match underline width to text */
+  padding-bottom: 6px; /* Space below text for underline */
+  font-weight: 700; /* Bold */
   transition: color 0.3s ease;
 }
 
@@ -48,7 +51,7 @@
 }
 
 .movie-title.hovered::after {
-  width: 100%; /* underline expands across the text width */
+  width: 100%; /* Underline expands across the text width */
 }
 
 @keyframes pulse {
@@ -60,6 +63,7 @@
     opacity: 0.5;
   }
 }
+
 pre {
   padding: 1rem;
   border-radius: 6px;

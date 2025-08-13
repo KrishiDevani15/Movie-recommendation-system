@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from typing import List
 class Movie(BaseModel):
     movie_id: int
     title: str
@@ -8,3 +9,4 @@ class Movie(BaseModel):
     popularity: float
     weighted_rating: Optional[float] = None  # Add weighted rating
     poster_url: Optional[str] = None         # Add poster URL
+    genres: Optional[List[str]] = []  

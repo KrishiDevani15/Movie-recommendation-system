@@ -1,3 +1,5 @@
+import React from "react";
+
 const MovieCard = ({ movie, isDimmed, isHovered }) => {
   return (
     <div
@@ -12,6 +14,7 @@ const MovieCard = ({ movie, isDimmed, isHovered }) => {
         loading="lazy"
       />
       <div className="p-4 text-white">
+        {/* Movie title with underline effect */}
         <h3 className={`movie-title ${isHovered ? "hovered" : ""}`}>
           {movie.title}
         </h3>
